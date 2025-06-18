@@ -29,4 +29,61 @@ Get-Service |
     Where-Object CanPauseAndContinue -EQ $true |
     Select-Object -Property *
 	
-	
+--More commands
+Hey! Here are some basic PowerShell commands to get OS/system info like name, IP address, running services, and installed apps:
+
+---
+
+### 🖥️ OS Info – Name, Version, Architecture
+
+```powershell
+Get-ComputerInfo | Select-Object OsName, OsArchitecture, WindowsVersion, WindowsBuildLabEx
+```
+
+### 🌐 IP Address
+
+```powershell
+Get-NetIPAddress | Where-Object {$_.AddressFamily -eq 'IPv4' -and $_.InterfaceAlias -notlike '*Loopback*'}
+```
+
+Or just for the active adapter:
+
+```powershell
+(Get-NetIPAddress | Where-Object {$_.PrefixOrigin -eq 'Dhcp'}).IPAddress
+```
+
+### 🔧 Running Services
+
+```powershell
+Get-Service | Where-Object {$_.Status -eq 'Running'}
+```
+
+### 📦 Installed Applications
+
+**(Modern approach for 64-bit programs):**
+
+```powershell
+Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* |
+Select-Object DisplayName, DisplayVersion, Publisher, InstallDate
+```
+
+**(Include 32-bit apps on 64-bit systems):**
+
+```powershell
+Get-ItemProperty HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* |
+Select-Object DisplayName, DisplayVersion, Publisher, InstallDate
+```
+
+Or use this to combine both:
+
+```powershell
+$paths = @(
+  'HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*',
+  'HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*'
+)
+Get-ItemProperty $paths | Select-Object DisplayName, DisplayVersion, Publisher | Where-Object { $_.DisplayName }
+```
+
+---
+
+Let me know if you want a version that exports the results or checks remote machines too!
