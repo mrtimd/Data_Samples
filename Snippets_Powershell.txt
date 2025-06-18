@@ -1,0 +1,32 @@
+_Snippets_Powershell
+#comment line - https://learn.microsoft.com/en-us/powershell/scripting/learn/ps101/04-pipelines?view=powershell-7.5
+
+$PSVersionTable
+$PSVersionTable.PSVersion
+Get-Verb
+Get-Command 
+Get-Help 
+Get-Member 
+
+Use flags to target either the verb or the noun in the command you want.
+-- Search for a command name using alias as the noun
+
+Get-Command -Noun alias*
+
+--Combine the -Noun flag and the -Verb flag
+Get-Command -Verb Get -Noun alias*
+
+Get-Command -Noun File*
+Get-Command -Verb Get -Noun File*
+
+Get-ExecutionPolicy
+Get-ExecutionPolicy -List
+Get-Service -Name W32Time
+
+A PowerShell one-liner is one continuous pipeline. Line-breaking a lengthy one-liner at the pipe symbol.
+
+Get-Service |
+    Where-Object CanPauseAndContinue -EQ $true |
+    Select-Object -Property *
+	
+	
