@@ -1,7 +1,20 @@
 _Snippets_Powershell
 #comment line - https://learn.microsoft.com/en-us/powershell/scripting/learn/ps101/04-pipelines?view=powershell-7.5
 
+verify install net
+
+test versions
+download .net, core tools
+do commands run in shell?
+dotnet --info
 $PSVersionTable
+az --version
+dotnet --version
+node --version
+python --version
+
+
+
 $PSVersionTable.PSVersion
 Get-Verb
 Get-Command 
